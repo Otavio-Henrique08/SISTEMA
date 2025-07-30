@@ -1,0 +1,44 @@
+.navegacao{
+   /* background-color: gray !important; */
+   background: linear-gradient(to right, rgb(90, 90, 90), rgb(162, 162, 162), rgb(90, 90, 90));
+}
+
+.menu{
+    background-color: rgb(90, 90, 90);
+    /* o menu pega toda a altura da tela*/
+    height: 100vh;
+    list-style: none;
+}
+
+.menu-item{
+    color: white;
+    padding: 8px 0px;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.menu-item:hover{
+    color: orange;     
+}
+
+.fundoLogin{
+    background-color: gray;
+    display: flex;
+}
+
+.painel{
+    background-color: rgba(255, 255, 255, 0.808);
+    width: 350px;
+    height: 350px;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 20px;
+    padding: 15px;
+    z-index: 2;
+}
+
+.cabecalho{
+    color: black;
+    text-align: center;
+    font-size: 40px;
+}
