@@ -25,23 +25,23 @@
       <h3> Login:</h3>
 
     </div>
-    <form>
+    <form action="./backend/acesso.php" method= "post">
           <div class="mb-3">
             <label class="form-label"> CPF </label>
-            <input type="text" class="form-control cpf">
+            <input name="cpf"type="text" class="form-control cpf">
           </div>
 
           <div class="mb-3">
             <label class="form-label"> Senha </label>
             <div class="input-group">
-            <input type="password" class="form-control" id="senha">
+            <input name="senha" type="password" class="form-control" id="senha">
             <span onclick="visualizar()" style="cursor: pointer;" class="input-group-text" >
               <i id="olho" class="fa-solid fa-eye"></i>
             </span>
             </div>
           </div>
 
-          <a href="index.html" type="submit" class="btn btn-primary"> Entrar </a>
+          <button type="submit" class="btn btn-primary"> Entrar </button>
         </form>
   </div>
   
