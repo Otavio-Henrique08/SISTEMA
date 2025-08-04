@@ -17,9 +17,16 @@
     echo $coluna['nome'];
 
     if(mysqli_num_rows($resultado) > 0){
+        session_start(); //iniciar a sessão 
+
+        //criar variaveis de sessão
+        $_SESSION['usuario'] = $coluna['nome'];
+        $_SESSION['cpf'] = $coluna['cpf'];
+        $_SESSION['senha'] = $coluna['senha'];
+
         header('location:../principal.php');
     }else{
-        header('location:../index.php');
+        header('location:../index.php?erro=1');
     }
 
 ?>
