@@ -1,3 +1,8 @@
+<?php
+    include './backend/conexao.php';
+    include './backend/valicao.php';
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -49,7 +54,7 @@
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search" />
           <button class="btn btn-outline-light" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-          <a href="#" class="btn btn-outline-light ms-2"> <i class="fa-solid fa-right-from-bracket"></i> </a>
+          <a href="./backend/sair.php" class="btn btn-outline-light ms-2"> <i class="fa-solid fa-right-from-bracket"></i> </a>
       </div>
       </form>
     </div>
@@ -64,7 +69,7 @@
       <div class="col-2 ">
         <ul class="menu">
           <p style="color:white;">
-             Bem-Vindo(a) <?php session_start(); echo $_SESSION['usuario']; ?>
+             Bem-Vindo(a) <?php echo $_SESSION['usuario']; ?>
          </p>
           <li> <a href="#" class="menu-item"> <i class="fa-solid fa-user"></i> Usuário </a> </li>
           <li> <a href="#" class="menu-item"> <i class="fa-solid fa-location-dot"></i> </i> Regiões </a> </li>
@@ -76,7 +81,7 @@
         </ul>
       </div>
 
-      <div class="col-5">
+      <div class="col-3">
         <h1> Cadastro </h1>
         <form>
           <div class="mb-3">
@@ -92,7 +97,7 @@
           <div class="mb-3">
             <label class="form-label">Senha</label>
             <div class="input-group">
-              <input type="password" class="form-control" id="senha">
+              <input type="password" class="form-control" id="senha" autocomplete="new-password">
        <span onclick="visualizar()" style="cursor: pointer;" class="input-group-text"> 
                 <i id="olho" class="fa-solid fa-eye"></i>
                </span>
@@ -104,7 +109,7 @@
         
       </div>
 
-      <div class="col-5">
+      <div class="col-7">
         <h1> Listagem </h1>
 
         <table id="tabela" class="table table-striped table-bordered">
@@ -113,28 +118,32 @@
               <th scope="col">id</th>
               <th scope="col">Nome</th>
               <th scope="col">E-mail</th>
+              <th scope="col">CPF</th>
               <th scope="col">Senha</th>
+              <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
+          <?php
+            $sql = "SELECT * FROM usuario";
+            // executa o comando
+            $dados = mysqli_query($conexao, $sql);
+            // percorrer todos os resgistros do banco
+            while($coluna = mysqli_fetch_assoc($dados)){  
+          ?>
             <tr>
-              <th scope="row">1</th>
-              <td>Stênio</td>
-              <td>Stenio@gmail.com</td>
-              <td> 123 </td>
+              <th scope="row"> <?php echo $coluna['id'] ?></th>
+              <td> <?php echo $coluna['nome'] ?></td>
+              <td> <?php echo $coluna['email'] ?></td>
+              <td> <?php echo $coluna['cpf'] ?></td>
+              <td> <?php echo $coluna['senha'] ?></td>
+              <td> 
+               <a href="#"> <i class="fa-solid fa-pen-to-square" style="color: #1e33bcff;"></i> </a>
+               <a href="#"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
+              </td>
+              
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Arlindo</td>
-              <td>Arlindo@gmail</td>
-              <td>lindo123</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Cleitom</td>
-              <td>Cleitom@gmail.com</td>
-              <td>cleitin1234</td>
-            </tr>
+            <?php } ?>
           </tbody>
         </table>
 

@@ -11,6 +11,6 @@
         unset($_SESSION['senha']);
 
         //manda para o login
-        header('location:../index.php');
+        header('location:./index.php');
     }
 ?>
