@@ -17,11 +17,28 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.css" />
-
-  <link rel="stylesheet" href="estilo.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js" integrity="sha512-467grL09I/ffq86LVdwDzi86uaxuAhFZyjC99D6CC1vghMp1YAs+DqCgRvhEtZIKX+o9lR0F2bro6qniyeCMEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.css" integrity="sha512-ZX18S8AwqoIm9QCd1EYun82IryFikdJt7lxj6583zx5Rvr5HoreO9tWY6f2VhSxvK+48vYFSf4zFtX/t2ge62g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="estilo.css">
 </head>
 
 <body>
+
+  <?php
+      if(isset($_SESSION ['mensagem'])){
+        echo"<script>
+          var notyf = new Notyf({
+          duration: 3000,
+          position: {
+            x: 'right',
+            y: 'top',
+          },
+      });
+          notyf.error(''['mensagem']);
+       </script>";
+      }
+    ?>
+
   <nav class="navbar navbar-expand-lg bg-secondary navbar-dark navegacao">
     <div class="container-fluid">
       <a class="navbar-brand" href="#"> <i class="fa-solid fa-handshake"></i> R.I.C.S</a>
