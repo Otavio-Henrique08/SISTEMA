@@ -83,21 +83,28 @@
 
       <div class="col-3">
         <h1> Cadastro </h1>
-        <form>
+
+        <form action="./backend/usuario/inserir.php" method="post">
           <div class="mb-3">
+
+            <div class="mb-3">
+            <label class="form-label"> nome </label>
+            <input name="nome" type="text" class="form-control">
+          </div>
+
             <label class="form-label"> CPF </label>
-            <input type="text" class="form-control cpf">
+            <input name="cpf" type="text" class="form-control cpf">
           </div>
 
           <div class="mb-3">
             <label class="form-label"> E-mail </label>
-            <input type="email" class="form-control">
+            <input name="email" type="email" class="form-control">
           </div>
-
+            
           <div class="mb-3">
             <label class="form-label">Senha</label>
             <div class="input-group">
-              <input type="password" class="form-control" id="senha" autocomplete="new-password">
+              <input name="senha" type="password" class="form-control" id="senha" autocomplete="new-password">
        <span onclick="visualizar()" style="cursor: pointer;" class="input-group-text"> 
                 <i id="olho" class="fa-solid fa-eye"></i>
                </span>
@@ -129,7 +136,7 @@
             // executa o comando
             $dados = mysqli_query($conexao, $sql);
             // percorrer todos os resgistros do banco
-            while($coluna = mysqli_fetch_assoc($dados)){  
+            while($coluna = mysqli_fetch_assoc($dados)){ 
           ?>
             <tr>
               <th scope="row"> <?php echo $coluna['id'] ?></th>
@@ -138,10 +145,9 @@
               <td> <?php echo $coluna['cpf'] ?></td>
               <td> <?php echo $coluna['senha'] ?></td>
               <td> 
-               <a href="#"> <i class="fa-solid fa-pen-to-square" style="color: #1e33bcff;"></i> </a>
-               <a href="#"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
-              </td>
-              
+               <a href="#"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
+               <a href="<?php echo " ./backend/usuario/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
+              </td>              
             </tr>
             <?php } ?>
           </tbody>
