@@ -10,6 +10,10 @@ $senha = $_REQUEST['senha'];
 $sql = "INSERT INTO usuario(nome, email, cpf, senha) VALUES ('$nome', '$email', '$cpf', '$senha')";
 //executa sql
 $resultado = mysqli_query($conexao, $sql);
+
+session_start();
+$_SESSION['mensagem'] = "Cadastrado com Sucesso!";
+
 //mandar para pagina principal
 header('Location:../../principal.php');
 

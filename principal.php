@@ -1,6 +1,19 @@
 <?php
     include './backend/conexao.php';
     include './backend/valicao.php';
+
+    $destino = "./backend/usuario/inserir.php";
+
+    //caso eu esteja alterado algum registro
+    //se for diferente de vazio, se tiver id na URL
+    if(!empty($_GET['id'])){
+      $id = $_GET['id'];
+      $sql = "SELECT * FROM usuario WHERE id='$id'";
+      //executa sql
+      $dados = mysqli_query($conexao, $sql);
+      $usuarios = mysqli_fetch_assoc($dados);
+      $destino = "./backend/usuario/alterar.php";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +38,7 @@
 <body>
 
   <?php
-      if(isset($_SESSION ['mensagem'])){
+      if(isset($_SESSION['mensagem'])){
         echo"<script>
           var notyf = new Notyf({
           duration: 3000,
@@ -34,8 +47,9 @@
             y: 'top',
           },
       });
-          notyf.error(''['mensagem']);
+          notyf.success(' ".$_SESSION['mensagem']." ');
        </script>";
+       unset($_SESSION['mensagem']);
       }
     ?>
 
@@ -162,7 +176,7 @@
               <td> <?php echo $coluna['cpf'] ?></td>
               <td> <?php echo $coluna['senha'] ?></td>
               <td> 
-               <a href="#"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
+               <a href="./principal.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
                <a href="<?php echo " ./backend/usuario/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
               </td>              
             </tr>

@@ -7,7 +7,7 @@ $sql = "DELETE FROM usuario WHERE id='$id' ";
 $resultado = mysqli_query($conexao, $sql);
 
 session_start();
-$_SESSION['mensagem'] = "Excluido com Sucesso!"
+$_SESSION['mensagem'] = "Excluido com Sucesso!";
 
 //mandar para pagina principal
 header('Location:../../principal.php');
