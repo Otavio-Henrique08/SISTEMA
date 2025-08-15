@@ -2,17 +2,17 @@
     include './backend/conexao.php';
     include './backend/valicao.php';
 
-    $destino = "./backend/usuario/inserir.php";
+    $destino = "./backend/regiao/inserir.php";
 
     //caso eu esteja alterado algum registro
     //se for diferente de vazio, se tiver id na URL
     if(!empty($_GET['id'])){
       $id = $_GET['id'];
-      $sql = "SELECT * FROM usuario WHERE id='$id'";
+      $sql = "SELECT * FROM regiao WHERE id='$id'";
       //executa sql
       $dados = mysqli_query($conexao, $sql);
-      $usuarios = mysqli_fetch_assoc($dados);
-      $destino = "./backend/usuario/alterar.php";
+      $regiaoes = mysqli_fetch_assoc($dados);
+      $destino = "./backend/regiao/alterar.php";
     }
 ?>
 
@@ -120,32 +120,13 @@
 
             <div class="mb-3">
             <label class="form-label"> id </label>
-            <input readonly name="id" type="text" autofocus value="<?php echo isset($usuarios) ? $usuarios['id']: "" ?>" class="form-control">
+            <input readonly name="id" type="text" autofocus value="<?php echo isset($regiaoes) ? $regiaoes['id']: "" ?>" class="form-control">
           </div>
 
             <div class="mb-3">
             <label class="form-label"> nome </label>
-            <input name="nome" type="text" value="<?php echo isset($usuarios) ? $usuarios['nome']: "" ?>" class="form-control">
-          </div>
-
-          
-            <label class="form-label"> CPF </label>
-            <input name="cpf" type="text" value="<?php echo isset($usuarios) ? $usuarios['cpf']: "" ?>" class="form-control cpf">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label"> E-mail </label>
-            <input name="email" type="email" value="<?php echo isset($usuarios) ? $usuarios['email']: "" ?>" class="form-control">
-          </div>
-            
-          <div class="mb-3">
-            <label class="form-label">Senha</label>
-            <div class="input-group">
-              <input name="senha" type="password" value="<?php echo isset($usuarios) ? $usuarios['senha']: "" ?>" class="form-control" id="senha" autocomplete="new-password">
-       <span onclick="visualizar()" style="cursor: pointer;" class="input-group-text"> 
-                <i id="olho" class="fa-solid fa-eye"></i>
-               </span>
-            </div>
+            <input name="nome" type="text" value="<?php echo isset($regiaoes) ? $regiaoes['nome']: "" ?>" class="form-control">
+          </div>    
           </div>
 
           <button type="submit" class="btn btn-primary"> Salvar </button>
@@ -161,15 +142,13 @@
             <tr>
               <th scope="col">id</th>
               <th scope="col">Nome</th>
-              <th scope="col">E-mail</th>
-              <th scope="col">CPF</th>
-              <th scope="col">Senha</th>
               <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
+
           <?php
-            $sql = "SELECT * FROM usuario";
+            $sql = "SELECT * FROM regiao";
             // executa o comando
             $dados = mysqli_query($conexao, $sql);
             // percorrer todos os resgistros do banco
@@ -178,12 +157,10 @@
             <tr>
               <th scope="row"> <?php echo $coluna['id'] ?></th>
               <td> <?php echo $coluna['nome'] ?></td>
-              <td> <?php echo $coluna['email'] ?></td>
-              <td> <?php echo $coluna['cpf'] ?></td>
-              <td> <?php echo $coluna['senha'] ?></td>
+              
               <td> 
                <a href="./principal.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
-               <a href="<?php echo " ./backend/usuario/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
+               <a href="<?php echo " ./backend/regiao/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
               </td>              
             </tr>
             <?php } ?>
