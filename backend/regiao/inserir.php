@@ -14,4 +14,4 @@ $_SESSION['mensagem'] = " $nome Cadastrado com Sucesso!";
 //mandar para pagina principal
 header('Location:../../regiao.php');
 
-?>
+?>         

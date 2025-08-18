@@ -159,7 +159,7 @@
               <td> <?php echo $coluna['nome'] ?></td>
               
               <td> 
-               <a href="./principal.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
+               <a href="./regiao.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
                <a href="<?php echo " ./backend/regiao/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
               </td>              
             </tr>
