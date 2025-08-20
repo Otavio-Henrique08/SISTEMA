@@ -2,17 +2,17 @@
     include './backend/conexao.php';
     include './backend/valicao.php';
     include './recursos/cabecalho.php';
-    $destino = "./backend/regiao/inserir.php";
+    $destino = "./backend/cidade/inserir.php";
 
     //caso eu esteja alterado algum registro
     //se for diferente de vazio, se tiver id na URL
     if(!empty($_GET['id'])){
       $id = $_GET['id'];
-      $sql = "SELECT * FROM regiao WHERE id='$id'";
+      $sql = "SELECT * FROM cidade WHERE id='$id'";
       //executa sql
       $dados = mysqli_query($conexao, $sql);
-      $regiaoes = mysqli_fetch_assoc($dados);
-      $destino = "./backend/regiao/alterar.php";
+      $cidades = mysqli_fetch_assoc($dados);
+      $destino = "./backend/cidade/alterar.php";
     }
 ?>
 
@@ -36,13 +36,35 @@
 
             <div class="mb-3">
             <label class="form-label"> id </label>
-            <input readonly name="id" type="text" autofocus value="<?php echo isset($regiaoes) ? $regiaoes['id']: "" ?>" class="form-control">
+            <input readonly name="id" type="text" autofocus value="<?php echo isset($cidades) ? $cidades['id']: "" ?>" class="form-control">
           </div>
 
             <div class="mb-3">
             <label class="form-label"> nome </label>
-            <input name="nome" type="text" value="<?php echo isset($regiaoes) ? $regiaoes['nome']: "" ?>" class="form-control">
-          </div>    
+            <input name="nome" type="text" value="<?php echo isset($cidades) ? $cidades['nome']: "" ?>" class="form-control">
+          </div>   
+
+          <div class="mb-3">
+            <label class="form-label"> cep </label>
+            <input name="cep" type="text" value="<?php echo isset($cidades) ? $cidades['cep']: "" ?>" class="form-control cep">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label"> estado </label>
+            <input name="estado" type="text" value="<?php echo isset($cidades) ? $cidades['estado']: "" ?>" class="form-control">
+          </div>
+
+          <div class="mb-3"> 
+            <label> Região </label>
+            <select name="regiao" class="form-select" required> 
+              <option> Selecione uma região </option>
+              <?php 
+              $sql = "SELECT * FROM regiao ORDER BY nome";
+              $resultado = mysqli_query($conexao, $sql);
+              ?>
+            </select>
+          </div>
+
           </div>
 
           <button type="submit" class="btn btn-primary"> Salvar </button>
@@ -58,13 +80,16 @@
             <tr>
               <th scope="col">id</th>
               <th scope="col">Nome</th>
+              <th scope="col">Cep</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Região</th>
               <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
 
           <?php
-            $sql = "SELECT * FROM regiao";
+            $sql = "SELECT * FROM cidade";
             // executa o comando
             $dados = mysqli_query($conexao, $sql);
             // percorrer todos os resgistros do banco
@@ -73,10 +98,13 @@
             <tr>
               <th scope="row"> <?php echo $coluna['id'] ?></th>
               <td> <?php echo $coluna['nome'] ?></td>
+              <td> <?php echo $coluna['cep'] ?></td>
+              <td> <?php echo $coluna['estado'] ?></td>
+              <td> <?php echo $coluna['id_regiao_fk'] ?></td>
               
               <td> 
-               <a href="./regiao.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
-               <a href="<?php echo " ./backend/regiao/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
+               <a href="./cidade.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
+               <a href="<?php echo " ./backend/cidade/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
               </td>              
             </tr>
             <?php } ?>
