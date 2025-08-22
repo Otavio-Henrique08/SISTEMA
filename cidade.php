@@ -61,6 +61,12 @@
               <?php 
               $sql = "SELECT * FROM regiao ORDER BY nome";
               $resultado = mysqli_query($conexao, $sql);
+              $regiaoSelecionada = isset ($cidades) ? $cidades ['id_regiao_fk']: '';
+
+              while ($reg = mysqli_fetch_assoc($resultado)){
+                $selecao = ($reg['id'] == $regiaoSelecionada) ? 'Selecione' : '';
+                echo "<option value='{$reg['id']}' $selecao> {$reg['nome']} </option>";
+              }
               ?>
             </select>
           </div>
@@ -100,8 +106,12 @@
               <td> <?php echo $coluna['nome'] ?></td>
               <td> <?php echo $coluna['cep'] ?></td>
               <td> <?php echo $coluna['estado'] ?></td>
-              <td> <?php echo $coluna['id_regiao_fk'] ?></td>
-              
+              <?php
+                $sql = "SELECT * FROM regiao WHERE id=".$coluna['id_regiao_fk'];  
+                $resultado = mysqli_query($conexao, $sql);
+                $regiao = mysqli_fetch_assoc($resultado);
+              ?>
+              <td> <?php echo $regiao['nome'] ?></td>
               <td> 
                <a href="./cidade.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
                <a href="<?php echo " ./backend/cidade/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
