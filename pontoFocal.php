@@ -2,17 +2,17 @@
     include './backend/conexao.php';
     include './backend/valicao.php';
     include './recursos/cabecalho.php';
-    $destino = "./backend/cidade/inserir.php";
+    $destino = "./backend/pontoFocal/inserir.php";
 
     //caso eu esteja alterado algum registro
     //se for diferente de vazio, se tiver id na URL
     if(!empty($_GET['id'])){
       $id = $_GET['id'];
-      $sql = "SELECT * FROM cidade WHERE id='$id'";
+      $sql = "SELECT * FROM pontoFocal WHERE id='$id'";
       //executa sql
       $dados = mysqli_query($conexao, $sql);
-      $cidades = mysqli_fetch_assoc($dados);
-      $destino = "./backend/cidade/alterar.php";
+      $pontoFocais = mysqli_fetch_assoc($dados);
+      $destino = "./backend/pontoFocal/alterar.php";
     }
 ?>
 
@@ -36,22 +36,22 @@
 
             <div class="mb-3">
             <label class="form-label"> id </label>
-            <input readonly name="id" type="text" autofocus value="<?php echo isset($cidades) ? $cidades['id']: "" ?>" class="form-control">
+            <input readonly name="id" type="text" autofocus value="<?php echo isset($pontoFocais) ? $pontoFocais['id']: "" ?>" class="form-control">
           </div>
 
             <div class="mb-3">
             <label class="form-label"> nome </label>
-            <input name="nome" type="text" value="<?php echo isset($cidades) ? $cidades['nome']: "" ?>" class="form-control">
+            <input name="nome" type="text" value="<?php echo isset($pontoFocais) ? $pontoFocais['nome']: "" ?>" class="form-control">
           </div>   
 
           <div class="mb-3">
             <label class="form-label"> cep </label>
-            <input name="cep" type="text" value="<?php echo isset($cidades) ? $cidades['cep']: "" ?>" class="form-control cep">
+            <input name="cep" type="text" value="<?php echo isset($pontoFocais) ? $pontoFocais['cep']: "" ?>" class="form-control cep">
           </div>
 
           <div class="mb-3">
             <label class="form-label"> estado </label>
-            <input name="estado" type="text" value="<?php echo isset($cidades) ? $cidades['estado']: "" ?>" class="form-control">
+            <input name="estado" type="text" value="<?php echo isset($pontoFocais) ? $pontoFocais['estado']: "" ?>" class="form-control">
           </div>
 
           <div class="mb-3"> 
@@ -61,7 +61,7 @@
               <?php 
               $sql = "SELECT * FROM regiao ORDER BY nome";
               $resultado = mysqli_query($conexao, $sql);
-              $regiaoSelecionada = isset ($cidades) ? $cidades ['id_regiao_fk']: '';
+              $regiaoSelecionada = isset ($pontoFocais) ? $pontoFocais ['id_regiao_fk']: '';
 
               while ($reg = mysqli_fetch_assoc($resultado)){
                 $selecao = ($reg['id'] == $regiaoSelecionada) ? 'selected' : '';
@@ -86,16 +86,18 @@
             <tr>
               <th scope="col">id</th>
               <th scope="col">Nome</th>
-              <th scope="col">Cep</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Região</th>
+              <th scope="col">Tipo</th>
+              <th scope="col">CNPJ</th>
+              <th scope="col">Celular</th>
+              <th scope="col">Email</th>
+              <th scope="col">Cidades</th>
               <th scope="col">Opções</th>
             </tr>
           </thead>
           <tbody>
 
           <?php
-            $sql = "SELECT * FROM cidade";
+            $sql = "SELECT * FROM ponto_focal";
             // executa o comando
             $dados = mysqli_query($conexao, $sql);
             // percorrer todos os resgistros do banco
@@ -104,8 +106,10 @@
             <tr>
               <th scope="row"> <?php echo $coluna['id'] ?></th>
               <td> <?php echo $coluna['nome'] ?></td>
-              <td> <?php echo $coluna['cep'] ?></td>
-              <td> <?php echo $coluna['estado'] ?></td>
+              <td> <?php echo $coluna['tipo'] ?></td>
+              <td> <?php echo $coluna['cnpj_cpf'] ?></td>
+              <td> <?php echo $coluna['celular'] ?></td>
+              <td> <?php echo $coluna['email'] ?></td>
               <?php
                 $sql = "SELECT * FROM regiao WHERE id=".$coluna['id_regiao_fk'];  
                 $resultado = mysqli_query($conexao, $sql);
@@ -113,18 +117,21 @@
               ?>
               <td> <?php echo $regiao['nome'] ?></td>
               <td> 
-               <a href="./cidade.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
-               <a href="<?php echo " ./backend/cidade/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
+               <a href="./pontoFocal.php?id=<?= $coluna['id'] ?>"><i class="fa-solid fa-pen-to-square me-2" style="color: #1e33bcff;"></i></a>
+               <a href="<?php echo " ./backend/pontoFocal/excluir.php?id=".$coluna['id'] ?>" onclick="return confirm('Deseja realmente excluir?')"> <i class="fa-solid fa-trash" style="color: #ff0000;"></i> </a>
               </td>              
             </tr>
+
             <?php } ?>
+
           </tbody>
+
         </table>
 
       </div>
 
     </div>
-
+    
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
