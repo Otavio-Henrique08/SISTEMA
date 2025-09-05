@@ -1,3 +1,31 @@
+<?php
+  include './backend/conexao.php';
+  include './backend/valicao.php';
+  $sql = "
+  SELECT *,
+  v.id,
+  v.data,
+  pf.nome AS ponto_focal_nome,
+  pf.tipo,
+  a.nome AS area_nome,
+  c.nome AS cidade_nome,
+  r.nome AS regiao_nome
+
+  FROM venda v INNER JOIN ponto_focal pf
+  ON pf.id = v.id_ponto_focal_fk
+  INNER JOIN area a 
+  ON a.id = v.id_area_fk
+  INNER JOIN cidade c 
+  ON pf.id_cidade_fk = c.id
+  INNER JOIN regiao r
+  ON c.id_regiao_fk = r.id
+  ORDER BY v.data DESC
+  ";
+  $resultado = mysqli_query($conexao, $sql);
+  $teste = mysqli_fetch_assoc($resultado);
+  echo $teste['nome'];
+  ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -67,21 +95,23 @@
             <th> Excluir </th>
           </tr>
           <tbody>
+            <?php while ($linha = mysqli_fetch_assoc($resultado)) { ?>
             <tr>
-              <td> Noroeste </td>
-              <td> Porto Rico </td>
-              <td> Prefeitura </td>
-              <td> Público </td>
-              <td> Gastronomia </td>
-              <td> 21/07/2025 </td>
-              <td> WhatsApp </td>
-              <td> venda feita pelo Jhonatã </td>
+              <td> <?= $linha['regiao_nome'] ?> </td>
+              <td> <?= $linha['cidade_nome'] ?> </td>
+              <td> <?= $linha['ponto_focal_nome'] ?> </td>
+              <td> <?= $linha['tipo'] ?> </td>
+              <td> <?= $linha['area_nome'] ?> </td>
+              <td> <?= $linha['data'] ?> </td>
+              <td> <?= $linha['origem'] ?> </td>
+              <td> <?= $linha['obs'] ?> </td>           
               <td>
                 <a href="#" class="text-danger" onclick="return confirm('Tem certeza que quer excluir?')">
                   <i class="fa-solid fa-trash-can"></i>
                 </a>
               </td>
             </tr>
+            <?php } ?>
           </tbody>
 
         </thead>
