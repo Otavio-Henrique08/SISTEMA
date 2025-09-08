@@ -18,7 +18,7 @@
 
 <body>
 
-  <div claas="container  mt-4">
+  <div claas="container  mt-4">         
     <h2> Venda de Áreas de Cursos </h2>
     <form action="./backend/venda/salvar_venda.php" method="post">
       <div class="row">

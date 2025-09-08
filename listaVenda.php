@@ -22,8 +22,6 @@
   ORDER BY v.data DESC
   ";
   $resultado = mysqli_query($conexao, $sql);
-  $teste = mysqli_fetch_assoc($resultado);
-  echo $teste['nome'];
   ?>
 
 <!DOCTYPE html>
@@ -47,38 +45,48 @@
   <h2> Relatório de Vendas de Áreas </h2>
 
   <div class="row">
+        
+        <div class="col-md-3">
+          <label> Região </label>
+          <select class="form-select" name="regiao_id" id="regiao_id" required>
+            <option> Selecione </option>     
+            <?php
+            include "./backend/conexao.php";
+            $regioes = mysqli_query($conexao, "SELECT * FROM regiao ORDER BY nome");
+            while($reg = mysqli_fetch_assoc($regioes)){
+              echo "<option value='{$reg['id']}'>{$reg['nome']}</option>";
+            }
+            ?>                                                
+          </select>
+        </div>
 
-    <div class="col-md-2">
-      <label> Região </label>
-      <select class="form-select">
-        <option> Noroeste </option>
-        <option> Sul </option>
-      </select>
-    </div>
+          <div class="col-md-3">
+            <label> Cidades </label>
+            <select class="form-select" name="cidade_id" id="cidade_id" required>
+              <option value=""> Selecione </option>
+              
+            </select>
+          </div>
 
-    <div class="col-md-2">
-      <label> Cidade </label>
-      <select class="form-select">  
-        <option> Nova Londrina </option>
-        <option> Marilena </option>
-      </select>
-    </div>
+          <div class="col-md-3">
+            <label> Ponto Focal (Empresa)</label>
+            <select class="form-select" name="ponto_focal_id" id="ponto_focal_id" required>
+            <option> Selecione </option>
+            </select>
+          </div>
 
-    <div class="col-md-2">
-      <label> Ponto Focal </label>
-      <select class="form-select">
-        <option> Prefeitura de Nova Londrina </option>
-        <option> Feclopes </option>
-      </select>
-    </div>
-
-    <div class="col-md-2">
-      <label> Área de Curso </label>
-      <select class="form-select">
-        <option> Tecnologia </option>
-        <option> Gastronomia </option>
-      </select>
-    </div>
+          <div class="col-md-3">
+            <label> Área de Curso </label>
+            <select class="form-select" name="area_id" id="area_id" required>
+            <option> Selecione </option>
+            <?php
+            $areas = mysqli_query($conexao, "SELECT * FROM area ORDER BY nome");
+            while($a = mysqli_fetch_assoc($areas)){
+              echo "<option value='{$a['id']}'> {$a['nome']} </option>";
+            }
+              ?>
+            </select>
+          </div>
 
     <div class="table-responsive mt-4">
       <table class="table table-bordered table-striped" id="tabela">  
@@ -102,11 +110,11 @@
               <td> <?= $linha['ponto_focal_nome'] ?> </td>
               <td> <?= $linha['tipo'] ?> </td>
               <td> <?= $linha['area_nome'] ?> </td>
-              <td> <?= $linha['data'] ?> </td>
+              <td> <?= date("d/m/Y", strtotime($linha['data'])) ?> </td>
               <td> <?= $linha['origem'] ?> </td>
-              <td> <?= $linha['obs'] ?> </td>           
+              <td> <?= $linha['obs'] ?> </td>       
               <td>
-                <a href="#" class="text-danger" onclick="return confirm('Tem certeza que quer excluir?')">
+                <a href="./backend/venda/excluir.php?id=<?=$linha['id']?>" class="text-danger" onclick="return confirm('Tem certeza que quer excluir?')">
                   <i class="fa-solid fa-trash-can"></i>
                 </a>
               </td>
@@ -131,6 +139,51 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script src="script.js"></script>
+
+<script>
+    //se tiver alteração no campo região, dispara essa função
+    $('#regiao_id').on('change', function(){ 
+      
+      //variável que guarda id da região selecionada
+      var regiaoId = $(this).val();
+
+      //vamos chamar o arquivo php que vai carregar as cidades de acordo com região
+      $.post('./backend/venda/buscar_cidades.php', {regiao_id: regiaoId},
+      
+        //função que vai retornar as cidades de acordo com a região
+        function(data){ $('#cidade_id').html(data); });
+
+     });
+
+     $('#cidade_id').on('change', function(){ 
+      var cidadeId = $(this).val();
+      $.post('./backend/venda/buscar_pontos_focais.php', {cidades_id: cidadeId},
+        function(data){ $('#ponto_focal_id').html(data); });
+     });
+
+     var tabela = $('#tabela').DataTable();
+
+     $('#regiao_id').on('change', function(){
+      var texto = $('#regiao_id option:selected').text();
+      tabela.column(0).search(texto).draw();
+     });
+    
+     $('#cidade_id').on('change', function(){
+      var texto = $('#cidade_id option:selected').text();
+      tabela.column(1).search(texto).draw();
+     });
+
+     $('#ponto_focal_id').on('change', function(){
+      var texto = $('#ponto_focal_id option:selected').text();
+      tabela.column(2).search(texto).draw();
+     });
+
+     $('#area_id').on('change', function(){
+      var texto = $('#area_id option:selected').text();
+      tabela.column(4).search(texto).draw();
+     });
+
+  </script>   
 
 </body>
 
