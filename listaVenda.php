@@ -38,6 +38,22 @@
     <link rel="stylesheet" href="./recursos/particle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link rel="stylesheet" href="estilo.css">
+
+    <style> 
+      button{
+        background-color:#007fff;
+        margin-bottom: 15px;
+        margin-right: 8px;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+      }
+      #tabela{
+        margin-top: 8px;
+      }
+    </style>
+
 </head>
 
 <body class="container-fluid">
@@ -127,7 +143,7 @@
     </div>
 
 
-
+  <a  href="./principal.php"class="btn btn-success" style="width: 80px;"> Voltar </a>
   </div>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -138,7 +154,7 @@
     crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-  <script src="script.js"></script>
+  
 
 <script>
     //se tiver alteração no campo região, dispara essa função
@@ -161,12 +177,24 @@
         function(data){ $('#ponto_focal_id').html(data); });
      });
 
-     var tabela = $('#tabela').DataTable();
+
+      
+     var tabela = $('#tabela').DataTable({
+      dom: 'Bfrtip',
+      buttons:['copy','excel','pdf', 'print'],
+      responsive: true, 
+      language: {
+        url: 'https://cdn.datatables.net/plug-ins/2.3.2/i18n/pt-BR.json',
+      },
+    });
+   
+
 
      $('#regiao_id').on('change', function(){
       var texto = $('#regiao_id option:selected').text();
       tabela.column(0).search(texto).draw();
      });
+     
     
      $('#cidade_id').on('change', function(){
       var texto = $('#cidade_id option:selected').text();
@@ -184,6 +212,13 @@
      });
 
   </script>   
+
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 
 </body>
 
