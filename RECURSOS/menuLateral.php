@@ -9,4 +9,5 @@
           <li> <a href="area.php" class="menu-item"> <i class="fa-solid fa-graduation-cap"></i> Áreas </a> </li>
           <li> <a href="venda.php" class="menu-item"> <i class="fa-solid fa-cart-shopping"></i> Efetuar Venda </a> </li>
           <li> <a href="listaVenda.php" class="menu-item"> <i class="fa-solid fa-magnifying-glass-dollar"></i> Pesquisar Vendas </a> </li>
+          <li> <a href="grafico.php" class="menu-item"> <i class="fa-solid fa-chart-simple"></i> Gráficos </a> </li>
         </ul> 

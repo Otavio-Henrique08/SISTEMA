@@ -12,7 +12,7 @@ $celular = $_REQUEST['celular'];
 $email = $_REQUEST['email'];
 $cidade = $_REQUEST['cidade'];
 
-$sql2 = "SELECT * FROM ponto_focal WHERE nome = '$nome'";
+$sql2 = "SELECT * FROM ponto_focal WHERE nome = '$nome' AND id_cidade_fk='$cidade' ";
 $resultado = mysqli_query($conexao, $sql2);
 
 if(mysqli_num_rows($resultado) > 0){
